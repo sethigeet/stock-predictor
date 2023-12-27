@@ -14,7 +14,7 @@ api._logger = logging.Logger("api-logger", logging.ERROR)
 
 app = FastAPI()
 
-origins = ["http://localhost:3000", "localhost:3000"]
+origins = ["http://localhost:5173", "localhost:5173"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -55,7 +55,7 @@ async def get_top_tickers_data(future_date: Optional[str] = None):
         future_price = old_value["Predicted_Data"][future_date]
         perc_growth = (future_price - current_price) / current_price * 100
         desc_list.append(perc_growth)
-        old_value["Perc_Growth"] = int(perc_growth)
+        old_value["Pct_Growth"] = int(perc_growth)
 
     n = len(OLD_VALUES)
     for i in range(n):

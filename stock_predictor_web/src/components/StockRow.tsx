@@ -4,22 +4,24 @@ import { StockChart } from "./StockChart";
 interface StockRowProps {
   ticker: string;
   name: string;
+  pctGrowth: number;
   dates: Date[];
   prices: number[];
-  dates_predicted: Date[];
-  prices_predicted: number[];
+  datesPredicted: Date[];
+  pricesPredicted: number[];
 }
 
 export const StockRow: FC<StockRowProps> = ({
   ticker,
   name,
+  pctGrowth,
   dates,
   prices,
-  dates_predicted,
-  prices_predicted,
+  datesPredicted,
+  pricesPredicted,
 }) => {
   return (
-    <div className="stats shadow">
+    <div className="stats shadow w-full bg-base-200">
       <div className="stat place-items-center">
         <div className="stat-title">{name}</div>
         <div className="stat-value">{ticker}</div>
@@ -43,8 +45,20 @@ export const StockRow: FC<StockRowProps> = ({
 
       <div className="stat place-items-center">
         <div className="stat-title">Expected Growth</div>
-        <div className="stat-value text-secondary">23%</div>
-        <div className="stat-desc text-secondary">↗︎ 40 (2%)</div>
+        <div
+          className={`stat-value ${
+            pctGrowth > 0 ? "text-success" : "text-error"
+          }`}
+        >
+          {pctGrowth}%
+        </div>
+        <div
+          className={`stat-desc ${
+            pctGrowth > 0 ? "text-success" : "text-error"
+          }`}
+        >
+          (in a month from now)
+        </div>
       </div>
 
       <div className="stat place-items-center">
@@ -53,8 +67,8 @@ export const StockRow: FC<StockRowProps> = ({
           <StockChart
             dates={dates}
             prices={prices}
-            dates_predicted={dates_predicted}
-            prices_predicted={prices_predicted}
+            dates_predicted={datesPredicted}
+            prices_predicted={pricesPredicted}
           />
         </div>
         <div className="stat-desc"></div>

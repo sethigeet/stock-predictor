@@ -24,7 +24,6 @@ async def get_prices(ctx: Context) -> None:
         with open("top-tickers.json") as f:
             data = json.load(f)
             for i in list(data.keys())[: config.NUM_STOCKS_TO_MONITOR]:
-                print(i)
                 res = predict(i + ".bo")
                 non_pred = {}
                 pred = {}
