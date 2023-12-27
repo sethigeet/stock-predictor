@@ -74,8 +74,8 @@ async def get_top_tickers_data(future_date: Optional[str] = None):
 
 @app.get("/ticker/{ticker}")
 async def get_ticker_data(ticker: str):
-    for i in OLD_VALUES:
-        if i["Ticker"] == ticker:
-            return OLD_VALUES[i]
+    for old_value in OLD_VALUES:
+        if old_value["Ticker"] == ticker:
+            return old_value
 
     return None

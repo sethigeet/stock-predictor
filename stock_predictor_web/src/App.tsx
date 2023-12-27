@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { ErrorMsg, LoadingIndicator, Navbar, StockRow } from "./components";
+import { ErrorMsg, LoadingIndicator, StockRow } from "./components";
 
 import type { Stock } from "./types";
 
@@ -7,12 +7,13 @@ export default function App() {
   const { data, isLoading, isError, error } = useQuery(
     "top-tickers",
     async () =>
-      fetch("http://localhost:5000/top-tickers").then((res) => res.json())
+      fetch(`${import.meta.env.VITE_API_URL}/top-tickers`).then((res) =>
+        res.json()
+      )
   );
 
   return (
     <>
-      <Navbar />
       <LoadingIndicator loading={isLoading} />
       {isError && <ErrorMsg error={error as Error} />}
       {data && (
@@ -21,9 +22,8 @@ export default function App() {
             Top Stocks of the Day
           </h1>
           {data.map((stock: Stock) => (
-            <div className="my-3">
+            <div className="my-3" key={stock.Ticker}>
               <StockRow
-                key={stock.Ticker}
                 ticker={stock.Ticker}
                 name={stock.Name}
                 pctGrowth={stock.Pct_Growth}
