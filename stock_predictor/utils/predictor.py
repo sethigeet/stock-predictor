@@ -1,4 +1,5 @@
 import datetime
+import os
 
 import pandas as pd
 import numpy as np
@@ -8,10 +9,16 @@ import yfinance as yf
 from stock_predictor import config
 
 
+cached_tickers = os.listdir("./cache")
+
+
 def get_data(ticker: str) -> pd.DataFrame:
+    if f"{ticker}.csv" in cached_tickers:
+        return pd.read_csv(f"./cache/{ticker}.csv", index_col=0, parse_dates=True)
     df = yf.Ticker(ticker).history(
         period=config.STOCKS_DATA_PERIOD, interval=config.STOCKS_DATA_INTERVAL
     )
+    df.to_csv(f"./cache/{ticker}.csv")
     return df
 
 
@@ -71,7 +78,7 @@ def get_predicted_dates(
 
 def predict(
     ticker: str,
-) -> tuple[list[datetime.datetime], np.ndarray, list[datetime.datetime], np.ndarray]:
+) -> tuple[list[np.datetime64], np.ndarray, list[np.datetime64], np.ndarray]:
     data = get_data(ticker)
     X, X_lately, y = split_data(data)
     clf = train_model(X, y)
