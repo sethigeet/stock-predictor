@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "stock-predictor"
+version = "0.1.0"
+description = ""
+authors = ["Geet Sethi <geetsethi05@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.12"
+yfinance = "^0.2.33"
+uagents = "^0.9.2"
+requests = "^2.31.0"
+beautifulsoup4 = "^4.12.2"
+lxml = "^4.9.4"
+scikit-learn = "^1.3.2"
+matplotlib = "^3.8.2"
+fastapi = {extras = ["full"], version = "^0.108.0"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
